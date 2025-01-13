@@ -23,7 +23,7 @@
 
 /* Add Your Declarations and Function Comments here */
  
-void print_statistics(unsigned char * arr, unsigned int N);
+void print_statistics(unsigned char arr[], unsigned int N);
 /**
  * @brief Print min, max, mean, median 
  *
@@ -36,7 +36,7 @@ void print_statistics(unsigned char * arr, unsigned int N);
  * @return None
  */
 
-void print_array(unsigned char * arr, unsigned int N);
+void print_array(unsigned char arr[], unsigned int N);
 /**
  * @brief Display array to screen
  *
@@ -48,7 +48,7 @@ void print_array(unsigned char * arr, unsigned int N);
  * @return None
  */
 
-unsigned char find_median(unsigned char * arr, unsigned int N);
+unsigned char find_median(unsigned char arr[], unsigned int N);
 /**
  * @brief Find median of array
  *
@@ -60,7 +60,7 @@ unsigned char find_median(unsigned char * arr, unsigned int N);
  * @return The median of the elements in the array
  */
 
-unsigned char find_mean(unsigned char * arr, unsigned int N);
+unsigned char find_mean(unsigned char arr[], unsigned int N);
 /**
  * @brief Find mean of array
  *
@@ -72,7 +72,7 @@ unsigned char find_mean(unsigned char * arr, unsigned int N);
  * @return The mean of the elements in the array
  */
 
-unsigned char find_maximum(unsigned char * arr, unsigned int N);
+unsigned char find_maximum(unsigned char arr[], unsigned int N);
 /**
  * @brief Find maximum among array
  *
@@ -84,7 +84,7 @@ unsigned char find_maximum(unsigned char * arr, unsigned int N);
  * @return The maximum among the elements of the array
  */
 
-unsigned char find_minimum(unsigned char * arr, unsigned int N);
+unsigned char find_minimum(unsigned char arr[], unsigned int N);
 /**
  * @brief Find minimum among array
  *
@@ -96,7 +96,7 @@ unsigned char find_minimum(unsigned char * arr, unsigned int N);
  * @return The minimum among the elements of the array
  */
 
-void sort_array(unsigned char * arr, unsigned int N);
+void sort_array(unsigned char arr[], unsigned int N);
 /**
  * @brief Sort input array from largest to smallest
  *
