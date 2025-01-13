@@ -37,7 +37,16 @@ void main() {
 
   /* Other Variable Declarations Go Here */
   /* Statistics and Printing Functions Go Here */
+  printf("Hello world\n");
 
 }
 
 /* Add other Implementation File Code Here */
+void print_statistics(unsigned char * arr, unsigned int N);
+void print_array(unsigned char * arr, unsigned int N);
+unsigned char find_median(unsigned char * arr, unsigned int N);
+unsigned char find_mean(unsigned char * arr, unsigned int N);
+unsigned char find_maximum(unsigned char * arr, unsigned int N);
+unsigned char find_minimum(unsigned char * arr, unsigned int N);
+void sort_array(unsigned char * arr, unsigned int N);
+
