@@ -50,8 +50,10 @@ ifeq ($(PLATFORM),HOST)
   CC = gcc
   CFLAGS = $(COMMONCFLAGS)
   LDFLAGS = $(COMMONLDFLAGS)
+  SIZETOOL = size
 else
   CC = arm-none-eabi-gcc
+  SIZETOOL = arm-none-eabi-size
   LDFLAGS = \
     $(COMMONLDFLAGS) \
     -T ../msp432p401r.lds# folder path relative to src
@@ -99,7 +101,6 @@ OBJS = $(SOURCES:.c=.o) # to use in compile-all and clean
 
 .PHONY: compile-all
 compile-all: $(OBJS) # will use %.o rules
-    # $(CC) -c $^ $(CFLAGS)
 
 .PHONY: clean
 clean:
@@ -109,10 +110,11 @@ clean:
 .PHONY: build
 build: $(TARGET)
 
-# DEP = $(SOURCES:.c=.d)
-# $(DEP): $(SOURCES)
-  # $(CC) 
-
+# In the following rule, the recipe has two commands, and they are separated by
+# newline. But they will only be recognized as two separate commands if the
+# second one actually starts with a tab (not space.) So we should indent as 
+# tabs (TODO maybe it will work with pressing a tab even if we are indenting as
+# spaces).
 $(TARGET): $(OBJS)
 	$(CC) $^ $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
-
+	$(SIZETOOL) $@
