@@ -25,7 +25,6 @@
 
 /* Add Your Declarations and Function Comments here */
  
-void print_statistics(unsigned char arr[], unsigned int N);
 /**
  * @brief Prints statistics and reverse sorts an unsigned 16-bit integer array
  *
@@ -41,8 +40,8 @@ void print_statistics(unsigned char arr[], unsigned int N);
  *
  * @return None
  */
+void print_statistics(unsigned char arr[], unsigned int N);
 
-void print_array(unsigned char arr[], unsigned int N);
 /**
  * @brief Displays an unsigned 16-bit integer array to screen as a column
  *
@@ -55,8 +54,8 @@ void print_array(unsigned char arr[], unsigned int N);
  *
  * @return None
  */
+void print_array(unsigned char arr[], unsigned int N);
 
-unsigned char find_median(unsigned char arr[], unsigned int N);
 /**
  * @brief Computes median of unsigned 16-bit integer array after sorting it
  *
@@ -71,8 +70,8 @@ unsigned char find_median(unsigned char arr[], unsigned int N);
  *
  * @return The (truncated) median of the elements in the array
  */
+unsigned char find_median(unsigned char arr[], unsigned int N);
 
-unsigned char find_mean(unsigned char arr[], unsigned int N);
 /**
  * @brief Computes mean of unsigned 16-bit integer array (truncated towards 0)
  *
@@ -84,8 +83,8 @@ unsigned char find_mean(unsigned char arr[], unsigned int N);
  *
  * @return The (truncated) mean of the elements in the array
  */
+unsigned char find_mean(unsigned char arr[], unsigned int N);
 
-unsigned char find_maximum(unsigned char arr[], unsigned int N);
 /**
  * @brief Finds maximum among elements of unsigned 16-bit integer array
  *
@@ -97,8 +96,8 @@ unsigned char find_maximum(unsigned char arr[], unsigned int N);
  *
  * @return The maximum among the elements of the array
  */
+unsigned char find_maximum(unsigned char arr[], unsigned int N);
 
-unsigned char find_minimum(unsigned char arr[], unsigned int N);
 /**
  * @brief Finds minimum among elements of unsigned 16-bit integer array
  *
@@ -110,8 +109,8 @@ unsigned char find_minimum(unsigned char arr[], unsigned int N);
  *
  * @return The minimum among the elements of the array
  */
+unsigned char find_minimum(unsigned char arr[], unsigned int N);
 
-void sort_array(unsigned char arr[], unsigned int N);
 /**
  * @brief Reverse sort an unsigned 16-bit interger array using insertion sort
  *
@@ -124,5 +123,6 @@ void sort_array(unsigned char arr[], unsigned int N);
  *
  * @return None
  */
+void sort_array(unsigned char arr[], unsigned int N);
 
 #endif /* __STATS_H__ */
