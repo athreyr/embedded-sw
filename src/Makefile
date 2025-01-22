@@ -10,15 +10,28 @@
 #*****************************************************************************
 
 #------------------------------------------------------------------------------
-# <Put a Description Here>
+# This makefile is used to create several build targets for two platforms (the 
+# native HOST and the cross-compiled MSP432). The default is MSP432, which can
+# be overriden using the PLATFORM flag. The source files and includes directory
+# are read from sources.mk, which are different for the two platforms. A 
+# complete build also invokes the size tool on the executable and displays the
+# output to stdout.
 #
 # Use: make [TARGET] [PLATFORM-OVERRIDES]
 #
 # Build Targets:
-#      <Put a description of the supported targets here>
+#       %.i - Preprocessed output (-E flag)
+#       %.asm - Compiler proper output (-S flag)
+#       %.o - Assembled output (-c flag)
+#       c1m2.out - Final executable, also invokes size
+#       c1m2.asm - Objdump output of c1m2.out
+#       compile-all - Object files (.o outputs) from all source files
+#       build - Same as c1m2.out
+#       clean - Silently removes all generated files from current directory
 #
 # Platform Overrides:
-#      <Put a description of the supported Overrides here
+#       PLATFORM=MSP432 - cross-compiler, linker (arm-none-eabi-gcc) (default)
+#       PLATFORM=HOST - native compiler, linker (gcc)
 #
 #------------------------------------------------------------------------------
 include sources.mk
