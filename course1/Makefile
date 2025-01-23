@@ -10,24 +10,17 @@
 #*****************************************************************************
 
 #------------------------------------------------------------------------------
-# This makefile is used to create several build targets for two platforms (the 
-# native HOST and the cross-compiled MSP432). The default is MSP432, which can
-# be overriden using the PLATFORM flag. The source files and includes directory
-# are read from sources.mk, which are different for the two platforms. A 
-# complete build also invokes the size tool on the executable and displays the
-# output to stdout.
-#
+# This makefile is used to create the complete build targets for two platforms
+# (the native HOST and the cross-compiled MSP432). The default is MSP432, which
+# can be overriden using the PLATFORM flag. The source files and includes 
+# directory are read from sources.mk, which are different for the two platforms.
+# 
 # Use: make [TARGET] [PLATFORM-OVERRIDES]
 #
 # Build Targets:
-#       %.i - Preprocessed output (-E flag)
-#       %.asm - Compiler proper output (-S flag)
-#       %.o - Assembled output (-c flag)
-#       c1m2.out - Final executable, also invokes size
-#       c1m2.asm - Objdump output of c1m2.out
-#       compile-all - Object files (.o outputs) from all source files
-#       build - Same as c1m2.out
-#       clean - Silently removes all generated files from current directory
+#       c1.out - Final executable
+#       build - Same as c1.out
+#       clean - Removes c1.out from current directory
 #
 # Platform Overrides:
 #       PLATFORM=MSP432 - cross-compiler, linker (arm-none-eabi-gcc) (default)
@@ -40,38 +33,30 @@ include sources.mk
 PLATFORM = MSP432
 
 # Name of Main Target executable
-BASENAME = c1m2
+BASENAME = c1
 TARGET = $(BASENAME).out
 
-# Preprocessor flags (choose platform)
-CPPFLAGS = -D$(PLATFORM)
+# Macro definitions
+MACROS = \
+  -DBASE_10=10 \
+  -DBASE_16=16
 
-# Same C flags for both platforms
-COMMONCFLAGS = \
-  -Wall \
-  -Werror \
-  -g \
-  -O0 \
-  -std=c99
-
-# Same linker flags for both platforms
-COMMONLDFLAGS = \
-  -Wl,-Map=$(BASENAME).map
-
+# Preprocessor flags (choose platform and define macros)
+CPPFLAGS = \
+  -D$(PLATFORM) \
+  $(MACROS) \
+  -DVERBOSE \
+  -DCOURSE1
+  
 # Compiler Flags and Defines
 ifeq ($(PLATFORM),HOST)
   CC = gcc
-  CFLAGS = $(COMMONCFLAGS)
-  LDFLAGS = $(COMMONLDFLAGS)
-  SIZETOOL = size
+  CFLAGS = 
+  LDFLAGS = 
 else
   CC = arm-none-eabi-gcc
-  SIZETOOL = arm-none-eabi-size
-  LDFLAGS = \
-    $(COMMONLDFLAGS) \
-    -T ../msp432p401r.lds# folder path relative to src
+  LDFLAGS = -T msp432p401r.lds
   CFLAGS = \
-    $(COMMONCFLAGS) \
     -mcpu=cortex-m4 \
     -mthumb \
     -march=armv7e-m \
@@ -80,54 +65,14 @@ else
     --specs=nosys.specs
 endif
 
-# Preprocessed output from c-implementation files only (not %.h)
-%.i: %.c
-	$(CC) -E $< $(INCLUDES) $(CPPFLAGS) -o $@
-
-# Assembly output from final executable. This must be defined before the other 
-# rule that creates it from c-implementation files, because if there are two
-# pattern matches with the same stem length (which probably won't happen here),
-# the one earlier in the makefile takes precedence.
-# The -m flag is used to provide the architecture used for interpreting the 
-# executable, which seems to be i386 for both platforms (for it to work).
-# TODO make it generic
-$(BASENAME).asm: $(TARGET)
-	objdump -m i386 --disassemble $< > $@
-
-# Assembly output from c-implementation files only (not %.h)
-%.asm: %.c
-	$(CC) -S $< $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -o $@
-
-# Object files for all c files. Also generate dependencies at this stage using
-# -MD flag. Using -M -MF outputfilename will not work because -E is implied, so
-# there won't be any compilation. Using -MD directly in main target rule won't
-# work either, because the outputfilename in that scenario is inferred from the
-# argument for -o, which will only have the name of the target, and not for
-# each source file. Use of -MT is only to change the name of the target in the
-# dependency file, which will be done correctly in this scenario anyway. -MM
-# just removes the .h files from the list, which isn't necessary either.
-%.o: %.c
-	$(CC) -c $< $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -MD -o $@
+$(TARGET): $(SOURCES)
+	$(CC) $^ $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
 
 # Phonys from now
-OBJS = $(SOURCES:.c=.o) # to use in compile-all and clean
-
-.PHONY: compile-all
-compile-all: $(OBJS) # will use %.o rules
-
 .PHONY: clean
 clean:
-	rm -f $(BASENAME).map $(OBJS) $(TARGET) *.i *.asm *.d
+	rm $(TARGET)
 
 # Main Target executable
 .PHONY: build
 build: $(TARGET)
-
-# In the following rule, the recipe has two commands, and they are separated by
-# newline. But they will only be recognized as two separate commands if the
-# second one actually starts with a tab (not space.) So we should indent as 
-# tabs (TODO maybe it will work with pressing a tab even if we are indenting as
-# spaces).
-$(TARGET): $(OBJS)
-	$(CC) $^ $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
-	$(SIZETOOL) $@
