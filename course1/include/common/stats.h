@@ -2,14 +2,14 @@
  * Copyright (C) 2017 by Alex Fosdick - University of Colorado
  *
  * Redistribution, modification or use of this software in source or binary
- * forms is permitted as long as the files maintain this copyright. Users are 
+ * forms is permitted as long as the files maintain this copyright. Users are
  * permitted to modify this and use it to learn about the field of embedded
  * software. Alex Fosdick and the University of Colorado are not liable for any
- * misuse of this material. 
+ * misuse of this material.
  *
  *****************************************************************************/
 /**
- * @file stats.h 
+ * @file stats.h
  * @brief Header file or stats.c, containing only function declarations
  *
  * This file includes declarations and documentation for the functions from the
@@ -24,11 +24,11 @@
 #define __STATS_H__
 
 /* Add Your Declarations and Function Comments here */
- 
+
 /**
  * @brief Prints statistics and reverse sorts an unsigned 16-bit integer array
  *
- * This function takes as an input a 16-bit integer array. This will print the 
+ * This function takes as an input a 16-bit integer array. This will print the
  * minimum and maximum element in the array, along with the mean and median of
  * the data set in the array. All statistics are rounded down to the nearest
  * integer (truncated towards zero). The array passed into it will also be
@@ -38,7 +38,7 @@
  * @param arr char array whose statistics is to be printed
  * @param N The size of the array
  *
- * @return None
+ * @return void
  */
 void print_statistics(unsigned char arr[], unsigned int N);
 
@@ -47,15 +47,14 @@ void print_statistics(unsigned char arr[], unsigned int N);
  *
  * This function takes as an input a 16-bit integer array. This will print all
  * the elements of the array to screen, separated by newlines, and in single
- * quotations ('1'\n'2' etc.). The PRINTF macro (instead of the function is 
- * called) for printing, and that too only if the VERBOSE flag is specified 
+ * quotations ('1'\n'2' etc.). The PRINTF macro (instead of the function) is
+ * called for printing, and that too only if the VERBOSE flag is specified
  * using -DVERBOSE when compiling.
- *
  *
  * @param arr char array which is to be printed
  * @param N The size of the array
  *
- * @return None
+ * @return void
  */
 void print_array(unsigned char arr[], unsigned int N);
 
@@ -124,7 +123,7 @@ unsigned char find_minimum(unsigned char arr[], unsigned int N);
  * @param arr char array which is to be reverse sorted
  * @param N The size of the array
  *
- * @return None
+ * @return void
  */
 void sort_array(unsigned char arr[], unsigned int N);
 

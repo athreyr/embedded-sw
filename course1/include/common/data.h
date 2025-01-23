@@ -10,7 +10,7 @@
  * @brief Abstraction of data manipulation operations
  *
  * This header file provides an abstraction of very basic data manipulation
- * operations. 
+ * operations.
  *
  * @author Athrey Ranjith Krishnanunni
  * @date 23 Jan 2025
@@ -22,17 +22,17 @@
 #include <stdint.h>
 
 /**
- * @brief Converts data from int type to ASCII
+ * @brief Converts data from int type to ASCII string
  *
  * The number to be converted is passed in as a signed 32-bit integer. Bases 2
- * to 16 are supported. This function returns the length of the converted data
- * (including a negative sign). Example my_itoa(ptr, 1234, 10) returns an ASCII
- * string length of 5 (including the null terminator). This function handles
- * signed data.
- * 
+ * to 16 are supported. This function returns the length of the converted string
+ * (including a negative sign and the null terminator). Negative numbers are
+ * handled by converting their absolute value into the base and then prefixing
+ * with a negative sign.
+ *
  * @param data Number to be converted into an ASCII string
- * @param ptr Pointer to the address where the string is populated
- * @param base Bases to be used for conversion
+ * @param ptr Pointer to the address where the string is to be populated
+ * @param base Base to be used for conversion
  *
  * @return Length of the converted data
  */
@@ -41,13 +41,14 @@ uint8_t my_itoa(int32_t data, uint8_t *ptr, uint32_t base);
 /**
  * @brief Converts data from ASCII string to int
  *
- * The character string to be converted is passed in as a pointer, along with 
- * the number of digits in the character set. Bases 2 to 16 are supported. This
- * function returns the converted 32-bit signed integer.
- * 
+ * The character string to be converted is passed in as a pointer, along with
+ * the number of digits in the character set (including the negative sign and
+ * the null terminator). Bases 2 to 16 are supported. This function returns the
+ * converted 32-bit signed integer.
+ *
  * @param ptr Pointer to the address where the string is populated
- * @param digits Number of digits in the character set
- * @param base Bases to be used for conversion
+ * @param digits Number of digits in the character set (including null terminator)
+ * @param base Base to be used for conversion
  *
  * @return Length of the converted data
  */
