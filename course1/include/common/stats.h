@@ -47,7 +47,10 @@ void print_statistics(unsigned char arr[], unsigned int N);
  *
  * This function takes as an input a 16-bit integer array. This will print all
  * the elements of the array to screen, separated by newlines, and in single
- * quotations ('1'\n'2' etc.).
+ * quotations ('1'\n'2' etc.). The PRINTF macro (instead of the function is 
+ * called) for printing, and that too only if the VERBOSE flag is specified 
+ * using -DVERBOSE when compiling.
+ *
  *
  * @param arr char array which is to be printed
  * @param N The size of the array
