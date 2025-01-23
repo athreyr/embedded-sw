@@ -22,9 +22,9 @@
  */
 #include "memory.h"
 
-#include <stddef.h>
 #include <stdint.h>
-#include <stdlib.h>
+#include <stdlib.h> // need for malloc and free
+// #include <stddef.h> // included in stdlib anyway
 
 /***********************************************************
  Function Definitions
@@ -78,16 +78,16 @@ uint8_t *my_memmove(uint8_t *src, uint8_t *dst, size_t length) {
       uint8_t *tmp = src + length;
       tmp = my_memcopy(src, tmp, length);
 
-      src = tmp; // so that copying to dst can be done with only src
+      src = tmp;  // so that copying to dst can be done with only src
       // (can be done in previous line itself, but this way is more readable)
 
-      break; // no need to check later addresses
+      break;  // no need to check later addresses
     }
   }
 
   // Now copy to dst
   dst = my_memcopy(src, dst, length);
-  return dst; // not in previous line for readability
+  return dst;  // not in previous line for readability
 }
 
 uint8_t *my_memset(uint8_t *src, size_t length, uint8_t value) {
@@ -111,10 +111,10 @@ uint8_t *my_reverse(uint8_t *src, size_t length) {
     necessary to iterate from 0 to length/2-1 in either case. (length is
     constrained to be non-negative since it's an unsigned type).
   */
-  for (uint8_t i = 0; i < length/2; i++) {
+  for (uint8_t i = 0; i < length / 2; i++) {
     uint8_t tmp = *(src + i);
-    *(src + i) = *(src + length-1 - i);
-    *(src + length-1 - i) = tmp;
+    *(src + i) = *(src + length - 1 - i);
+    *(src + length - 1 - i) = tmp;
   }
   return src;
 }
