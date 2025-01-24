@@ -15,13 +15,17 @@
 # can be overriden using the PLATFORM flag. The source files and includes 
 # directory are read from sources.mk, which are different for the two platforms.
 # 
-# Use: make [TARGET] [MACRO-OVERRIDES] [PLATFORM-OVERRIDES]
+# Use: make [TARGET] [VERBOSE=TRUE] [MACRO-OVERRIDES] [PLATFORM-OVERRIDES]
 #
 # Build Targets:
 #       c1.out - Final executable
 #       build - Same as c1.out
-#       clean - Removes c1.out from current directory
-#
+#       clean - Silently removes c1.out from current directory
+# 
+# Verbosity:
+#       VERBOSE=TRUE - Compiles executable with -DVERBOSE flag, which prints 
+#                      more information to screen
+# 
 # Macro Overrides:
 #       BASE_10=10 - Value of the BASE_10 macro, not defined in course1.c
 #       BASE_16=16 - Value of the BASE_16 macro, not defined in course1.c
@@ -31,6 +35,9 @@
 #       PLATFORM=MSP432 - cross-compiler, linker (arm-none-eabi-gcc)
 #
 #------------------------------------------------------------------------------
+
+# Verbosity
+VERBOSE = FALSE
 
 # Macro definitions
 BASE_10 = 10
@@ -50,9 +57,12 @@ CPPFLAGS = \
   -D$(PLATFORM) \
   -DBASE_10=$(BASE_10) \
   -DBASE_16=$(BASE_16) \
-  -DVERBOSE \
   -DCOURSE1
-  
+
+ifeq ($(VERBOSE),TRUE)
+  CPPFLAGS += -DVERBOSE
+endif
+
 # Compiler Flags and Defines
 ifeq ($(PLATFORM),HOST)
   CC = gcc
@@ -76,7 +86,7 @@ $(TARGET): $(SOURCES)
 # Phonys from now
 .PHONY: clean
 clean:
-	rm $(TARGET)
+	rm -f $(TARGET)
 
 # Main Target executable
 .PHONY: build
