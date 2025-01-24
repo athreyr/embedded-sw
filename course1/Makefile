@@ -15,36 +15,41 @@
 # can be overriden using the PLATFORM flag. The source files and includes 
 # directory are read from sources.mk, which are different for the two platforms.
 # 
-# Use: make [TARGET] [PLATFORM-OVERRIDES]
+# Use: make [TARGET] [MACRO-OVERRIDES] [PLATFORM-OVERRIDES]
 #
 # Build Targets:
 #       c1.out - Final executable
 #       build - Same as c1.out
 #       clean - Removes c1.out from current directory
 #
+# Macro Overrides:
+#       BASE_10=10 - Value of the BASE_10 macro, not defined in course1.c
+#       BASE_16=16 - Value of the BASE_16 macro, not defined in course1.c
+# 
 # Platform Overrides:
-#       PLATFORM=MSP432 - cross-compiler, linker (arm-none-eabi-gcc) (default)
-#       PLATFORM=HOST - native compiler, linker (gcc)
+#       PLATFORM=HOST - native compiler, linker (gcc) (default)
+#       PLATFORM=MSP432 - cross-compiler, linker (arm-none-eabi-gcc)
 #
 #------------------------------------------------------------------------------
-include sources.mk
+
+# Macro definitions
+BASE_10 = 10
+BASE_16 = 16
 
 # Platform Overrides
-PLATFORM = MSP432
+PLATFORM = HOST
+
+include sources.mk # must be after PLATFORM definition for proper SOURCES
 
 # Name of Main Target executable
 BASENAME = c1
 TARGET = $(BASENAME).out
 
-# Macro definitions
-MACROS = \
-  -DBASE_10=10 \
-  -DBASE_16=16
-
 # Preprocessor flags (choose platform and define macros)
 CPPFLAGS = \
   -D$(PLATFORM) \
-  $(MACROS) \
+  -DBASE_10=$(BASE_10) \
+  -DBASE_16=$(BASE_16) \
   -DVERBOSE \
   -DCOURSE1
   
